@@ -1,0 +1,409 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Tech Challenge - FIAP",
+    "description": "Grupo",
+    "version": "1.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Posts",
+      "description": "Acesso às postagens feitas pelos autores"
+    },
+    {
+      "name": "Authors",
+      "description": "Acesso aos usuários autores dos posts"
+    }
+  ],
+  "paths": {
+    "/posts": {
+      "post": {
+        "security": [
+          {
+            "authentication": []
+          }
+        ],
+        "tags": [
+          "Posts"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatePost"
+              }
+            }
+          }
+        },
+        "summary": "Criar uma nova postagem",
+        "description": "Permite que professores criem novas postagens. Este endpoint aceitará dados como título, conteúdo e autor no corpo da requisição.",
+        "responses": {
+          "200": {
+            "description": "Sucesso!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Post"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Posts"
+        ],
+        "summary": "Lista de postagens",
+        "description": "Este endpoint permitirá aos alunos visualizarem uma lista de todos os posts disponíveis na página principal",
+        "responses": {
+          "200": {
+            "description": "Operação com sucesso!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostArray"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/posts/search": {
+      "get": {
+        "parameters": [
+          {
+            "in": "query",
+            "name": "q",
+            "description": "Texto para procurar titulo",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "summary": "Busca de postagem",
+        "description": "Este endpoint permitirá a busca de posts por palavras-chave. Os usuários poderão passar uma query string com o termo de busca e o sistema retornará uma lista de posts que contêm esse termo no título ou conteúdo.",
+        "tags": [
+          "Posts"
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso!"
+          }
+        }
+      }
+    },
+    "/posts/admin": {
+      "get": {
+        "security": [
+          {
+            "authentication": []
+          }
+        ],
+        "summary": "Todas as postagens (visão administrativa)",
+        "description": "Este endpoint permitirá que professores vejam todas as postagens criadas, facilitando a gestão do conteúdo.",
+        "tags": [
+          "Posts"
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso!"
+          }
+        }
+      }
+    },
+    "/posts/{id}": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      ],
+      "get": {
+        "summary": "Leitura de postagem",
+        "description": "Ao acessar este endpoint com um ID específico de post, os alunos poderão ler o conteúdo completo desse post.",
+        "tags": [
+          "Posts"
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Post"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Não encontrado!"
+          }
+        }
+      },
+      "delete": {
+        "security": [
+          {
+            "authentication": []
+          }
+        ],
+        "tags": [
+          "Posts"
+        ],
+        "summary": "Excluir uma postagem",
+        "description": "Permite que professores excluam uma postagem específica, usando o ID do post como parâmetro.",
+        "responses": {
+          "204": {
+            "description": "Sucesso!"
+          }
+        }
+      },
+      "put": {
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdatePost"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "authentication": []
+          }
+        ],
+        "tags": [
+          "Posts"
+        ],
+        "summary": "Atualizar uma postagem existente",
+        "description": "Usado para editar uma postagem existente. Professores deverão fornecer o ID do post que desejam editar e os novos dados no corpo da requisição.",
+        "responses": {
+          "200": {
+            "description": "Sucesso!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Post"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/authors/signin": {
+      "post": {
+        "summary": "Logar na aplicação sendo um autor",
+        "tags": [
+          "Authors"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SignInAuthor"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Author"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/authors/signup": {
+      "post": {
+        "summary": "Criar um novo usuario autor",
+        "tags": [
+          "Authors"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SignUpAuthor"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Author"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "authentication": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "PostArray": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Post"
+        }
+      },
+      "Post": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "1a3aa486-8917-4eea-aa99-9e390b6bd8ca"
+          },
+          "title": {
+            "type": "string",
+            "example": "Titulo da postagem"
+          },
+          "content": {
+            "type": "string",
+            "example": "Lorem ipsum..."
+          },
+          "authorId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "6e9c1e7f-1342-49ee-ac85-bb6714ea8c44 "
+          },
+          "publishedAt": {
+            "type": "string",
+            "format": "date",
+            "example": "2017-01-01"
+          }
+        }
+      },
+      "SignUpAuthor": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "description": "Nome do autor",
+            "example": "John Doe"
+          },
+          "email": {
+            "type": "string",
+            "description": "Email do autor",
+            "example": "example@example.com",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "description": "Senha do autor",
+            "example": "MinhaSenha@123",
+            "format": "password"
+          }
+        }
+      },
+      "SignInAuthor": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "Email do autor",
+            "example": "example@example.com",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "description": "Senha do autor",
+            "example": "MinhaSenha@123",
+            "format": "password"
+          }
+        }
+      },
+      "Author": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "description": "Nome do autor",
+            "example": "John Doe"
+          },
+          "email": {
+            "type": "string",
+            "description": "Email do autor",
+            "example": "example@example.com",
+            "format": "email"
+          },
+          "token": {
+            "type": "string",
+            "description": "Token de autorização"
+          }
+        }
+      },
+      "CreatePost": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Nome to título",
+            "example": "Processo de Estudos Fiap"
+          },
+          "content": {
+            "type": "string",
+            "description": "Conteúdo da postagem",
+            "example": "orem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five cent"
+          }
+        }
+      },
+      "UpdatePost": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Identificador",
+            "example": "1a3aa486-8917-4eea-aa99-9e390b6bd8ca",
+            "format": "uuid"
+          },
+          "title": {
+            "type": "string",
+            "description": "Nome to título",
+            "example": "Processo de Estudos Fiap"
+          },
+          "content": {
+            "type": "string",
+            "description": "Conteúdo da postagem",
+            "example": "orem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five cent"
+          }
+        }
+      }
+    }
+  }
+}
