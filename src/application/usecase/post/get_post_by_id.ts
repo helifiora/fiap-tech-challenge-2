@@ -1,10 +1,14 @@
 import type { PostRepo } from "#application/repo/post_repo.ts";
 
-type Input = {
-  id: string;
-};
+type Input = { id: string };
 
-type Output = unknown | null;
+type Output = {
+  id: string;
+  title: string;
+  content: string;
+  publishedAt: Date;
+  authorId: string;
+} | null;
 
 export class GetPostById {
   #postRepo: PostRepo;

@@ -1,8 +1,7 @@
 import type { PostRepo } from "#application/repo/post_repo.ts";
 
-type Input = {
-  id: string;
-};
+type Input = { id: string };
+
 type Output = void;
 
 export class DeletePost {

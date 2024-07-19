@@ -1,9 +1,7 @@
 import type { PostRepo } from "#application/repo/post_repo.ts";
 import type { Post } from "#domain/model/post.ts";
 
-type Input = {
-  query?: string;
-};
+type Input = { query?: string };
 
 type Output = Post[];
 

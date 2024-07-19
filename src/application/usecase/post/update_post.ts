@@ -1,6 +1,5 @@
 import type { PostRepo } from "#application/repo/post_repo.ts";
 import { BaseError, BaseErrorEnum } from "#utils/error.ts";
-import { aU } from "vitest/dist/reporters-BECoY4-b.ts";
 
 type Input = {
   id: string;
