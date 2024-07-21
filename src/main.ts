@@ -3,9 +3,10 @@ import { parseEnv } from "./main_environment.ts";
 import { UseRouteConfig } from "./main_routes.ts";
 
 import { KyselyRepoFactory } from "#infrastructure/repo_adapter/_factory.ts";
-import { UseCaseFactory } from "#application/usecase/_factory.ts";
 import { JsonwebtokenJwtService } from "#infrastructure/jsonwebtoken_jwt_service.ts";
 import { ExpressServer } from "#infrastructure/server_adapter/express_server.ts";
+
+import { UseCaseFactory } from "#application/usecase/_factory.ts";
 
 const environment = parseEnv(env);
 
