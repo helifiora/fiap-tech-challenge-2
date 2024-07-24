@@ -1,7 +1,7 @@
 import type { JwtService } from "#application/jwt_service.ts";
 import jsonwebtoken from "jsonwebtoken";
 import { Author } from "#domain/model/author.ts";
-import { BaseError, BaseErrorEnum } from "#utils/error.ts";
+import { BaseError, BaseErrorEnum } from "#domain/error.ts";
 
 export class JsonwebtokenJwtService implements JwtService {
   #privateKey: string;

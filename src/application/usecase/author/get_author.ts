@@ -1,6 +1,6 @@
 import type { JwtService } from "#application/jwt_service.ts";
 import type { AuthorRepo } from "#application/repo/author_repo.ts";
-import { BaseError, BaseErrorEnum } from "#utils/error.ts";
+import { BaseError, BaseErrorEnum } from "#domain/error.ts";
 
 type Input = {
   email: string;

@@ -1,5 +1,5 @@
 import type { PostRepo } from "#application/repo/post_repo.ts";
-import { BaseError, BaseErrorEnum } from "#utils/error.ts";
+import { BaseError, BaseErrorEnum } from "#domain/error.ts";
 
 type Input = {
   id: string;

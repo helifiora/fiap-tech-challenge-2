@@ -1,5 +1,5 @@
 import type { Environment } from "#utils/environment.ts";
-import { BaseError, BaseErrorEnum } from "#utils/error.ts";
+import { BaseError, BaseErrorEnum } from "#domain/error.ts";
 import * as v from "valibot";
 
 export function parseEnv(value: unknown): Environment {

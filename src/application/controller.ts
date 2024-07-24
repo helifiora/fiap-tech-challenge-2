@@ -1,6 +1,6 @@
 import type { Author } from "#domain/model/author.ts";
 import { BaseSchema, type InferOutput, parse, ValiError } from "valibot";
-import { BaseError, BaseErrorEnum } from "#utils/error.ts";
+import { BaseError, BaseErrorEnum } from "#domain/error.ts";
 
 export type ControllerHandler = (
   request: ControllerRequest,

@@ -4,7 +4,7 @@ import {
   ControllerResponse,
 } from "#application/controller.ts";
 import { ControllerRouter, ControllerConfig } from "#application/server.ts";
-import { BaseError, BaseErrorEnum } from "#utils/error.ts";
+import { BaseError, BaseErrorEnum } from "#domain/error.ts";
 import { Handler, Request, Response, Router } from "express";
 import { ExpressAuthMiddleware } from "./express_controller_middlewares.ts";
 
@@ -60,7 +60,12 @@ export class ExpressControllerRouter implements ControllerRouter {
     const params = request.params;
     const queries = { ...request.query } as Record<string, string>;
     const body = request.body;
-    return new ControllerRequest({ body, params, queries, user });
+    return new ControllerRequest({
+      body,
+      params,
+      queries,
+      user,
+    });
   }
 
   #handleSuccess(res: Response, result: ControllerResponse): Response {

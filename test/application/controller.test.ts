@@ -1,13 +1,13 @@
 import { assert, describe, it } from "vitest";
 
+import * as v from "valibot";
+
 import {
   ControllerRequest,
   ControllerInvalidBodyError,
   ControllerNoParamError,
   ControllerResponse,
 } from "#application/controller.ts";
-
-import * as v from "valibot";
 
 describe("ControllerRequest", () => {
   const body1 = v.object({
