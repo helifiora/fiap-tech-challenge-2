@@ -1,19 +1,23 @@
 import {
-  ControllerRequest,
   ControllerResponse,
+  type ControllerRequest,
 } from "#application/controller.ts";
 
 import { authorSchema } from "./author_schema.ts";
 
-import { CreateAuthor } from "#application/usecase/author/create_author.ts";
-import { GetAuthor } from "#application/usecase/author/get_author.ts";
+import { AuthorUseCaseFactory } from "#application/usecase/author/_factory.ts";
 
 export class AuthorController {
-  static async signIn(
-    request: ControllerRequest,
-    useCase: GetAuthor,
-  ): Promise<ControllerResponse> {
+  #useCases: AuthorUseCaseFactory;
+
+  constructor(authorFac: AuthorUseCaseFactory) {
+    this.#useCases = authorFac;
+  }
+
+  async signIn(request: ControllerRequest): Promise<ControllerResponse> {
     const body = request.body(authorSchema.signIn);
+
+    const useCase = this.#useCases.getAuthor();
 
     const result = await useCase.handle({
       email: body.email,
@@ -23,11 +27,10 @@ export class AuthorController {
     return ControllerResponse.ok({ token: result.token });
   }
 
-  static async signUp(
-    request: ControllerRequest,
-    useCase: CreateAuthor,
-  ): Promise<ControllerResponse> {
+  async signUp(request: ControllerRequest): Promise<ControllerResponse> {
     const body = request.body(authorSchema.signUp);
+
+    const useCase = this.#useCases.createAuthor();
 
     const result = await useCase.handle({
       username: body.username,

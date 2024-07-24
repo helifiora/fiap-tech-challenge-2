@@ -27,48 +27,18 @@ export class UseRouteConfig implements ServerConfig {
   }
 
   #includeAuthor(route: ControllerRouter): void {
-    route.post(
-      "/signin",
-      (req) => AuthorController.signIn(req, this.#authorFac.getAuthor()),
-      { anonymous: true },
-    );
-
-    route.post(
-      "/signup",
-      (req) => AuthorController.signUp(req, this.#authorFac.createAuthor()),
-      { anonymous: true },
-    );
+    const ctrl = new AuthorController(this.#authorFac);
+    route.post("/signin", (req) => ctrl.signIn(req), { anonymous: true });
+    route.post("/signup", (req) => ctrl.signUp(req), { anonymous: true });
   }
 
   #includePost(route: ControllerRouter): void {
-    route.get(
-      "/",
-      (req) => PostController.index(req, this.#postFac.getPosts()),
-      { anonymous: true },
-    );
-
-    route.get(
-      "/search",
-      (req) => PostController.index(req, this.#postFac.getPosts()),
-      { anonymous: true },
-    );
-
-    route.get(
-      "/:id",
-      (req) => PostController.show(req, this.#postFac.getPostById()),
-      { anonymous: true },
-    );
-
-    route.post("/", (req) =>
-      PostController.create(req, this.#postFac.createPost()),
-    );
-
-    route.put("/:id", (req) =>
-      PostController.update(req, this.#postFac.updatePost()),
-    );
-
-    route.delete("/:id", (req) =>
-      PostController.delete(req, this.#postFac.deletePost()),
-    );
+    const ctrl = new PostController(this.#postFac);
+    route.get("/", (req) => ctrl.index(req), { anonymous: true });
+    route.get("/search", (req) => ctrl.index(req), { anonymous: true });
+    route.get("/:id", (req) => ctrl.show(req), { anonymous: true });
+    route.post("/", (req) => ctrl.create(req));
+    route.put("/:id", (req) => ctrl.update(req));
+    route.delete("/:id", (req) => ctrl.delete(req));
   }
 }

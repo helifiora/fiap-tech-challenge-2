@@ -60,12 +60,7 @@ export class ExpressControllerRouter implements ControllerRouter {
     const params = request.params;
     const queries = { ...request.query } as Record<string, string>;
     const body = request.body;
-    return new ControllerRequest({
-      body,
-      params,
-      queries,
-      user,
-    });
+    return new ControllerRequest({ body, params, queries, user });
   }
 
   #handleSuccess(res: Response, result: ControllerResponse): Response {
@@ -81,7 +76,7 @@ export class ExpressControllerRouter implements ControllerRouter {
       }
 
       if (error.type === BaseErrorEnum.authentication) {
-        return res.status(401).send({ error: error.message });
+        return res.status(401).send();
       }
 
       if (error.type === BaseErrorEnum.authorization) {
