@@ -1,7 +1,6 @@
 import type { GetManyOptions, PostRepo } from "#application/repo/post_repo.ts";
 import type { KyselyDatabase } from "../kysely_db.ts";
 import { Post } from "#domain/model/post.ts";
-import { undefined } from "valibot";
 
 export class KyselyPostRepo implements PostRepo {
   #db: KyselyDatabase;
