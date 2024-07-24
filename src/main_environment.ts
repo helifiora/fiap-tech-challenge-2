@@ -1,4 +1,4 @@
-import type { Environment } from "#utils/environment.ts";
+import type { Environment } from "#application/environment.ts";
 import { BaseError, BaseErrorEnum } from "#domain/error.ts";
 import * as v from "valibot";
 
