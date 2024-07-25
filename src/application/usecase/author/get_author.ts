@@ -39,7 +39,7 @@ export class GetAuthor {
       id: author.id,
       token,
       email: author.email,
-      username: "",
+      username: author.username,
     };
   }
 }
