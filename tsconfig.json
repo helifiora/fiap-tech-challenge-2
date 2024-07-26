@@ -6,11 +6,22 @@
     "baseUrl": "./",
     "rootDir": "./",
     "outDir": "dist",
+    "lib": [
+      "ESNext"
+    ],
     "paths": {
-      "#application/*": ["src/application/*"],
-      "#domain/*": ["src/domain/*"],
-      "#utils/*": ["src/utils/*"],
-      "#infrastructure/*": ["src/infrastructure/*"]
+      "#application/*": [
+        "src/application/*"
+      ],
+      "#domain/*": [
+        "src/domain/*"
+      ],
+      "#utils/*": [
+        "src/utils/*"
+      ],
+      "#infrastructure/*": [
+        "src/infrastructure/*"
+      ]
     },
     "allowImportingTsExtensions": true,
     "noEmit": true,
@@ -22,5 +33,8 @@
     "removeComments": true,
     "resolveJsonModule": true
   },
-  "include": ["src", "test"]
+  "include": [
+    "src",
+    "test"
+  ]
 }

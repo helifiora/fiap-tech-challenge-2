@@ -1,19 +1,29 @@
 import { env } from "node:process";
 import { parseEnv } from "./main_environment.ts";
-import { KyselyRepoFactory } from "#infrastructure/repo_adapter/_factory.ts";
-import { FileMigrationProvider, Migrator } from "kysely";
+import {
+  FileMigrationProvider,
+  Kysely,
+  Migrator,
+  PostgresDialect,
+} from "kysely";
 import fs from "node:fs/promises";
 import path from "node:path";
+import pg from "pg";
 
 const environment = parseEnv(env);
-const dbFac = new KyselyRepoFactory(environment.database);
+
+const dialect = new PostgresDialect({
+  pool: new pg.Pool({ connectionString: environment.database }),
+});
+
+const db = new Kysely({ dialect });
 
 const migrator = new Migrator({
-  db: dbFac.connection,
+  db,
   provider: new FileMigrationProvider({
     fs,
     path,
-    migrationFolder: path.resolve("src", "infrastructure", "migration"),
+    migrationFolder: path.resolve("migrations"),
   }),
 });
 

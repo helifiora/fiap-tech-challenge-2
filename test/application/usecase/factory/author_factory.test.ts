@@ -1,4 +1,4 @@
-import { assert, beforeEach, describe, it } from "vitest";
+import { assert, beforeEach, test } from "vitest";
 import { AuthorUseCaseFactory } from "#application/usecase/author/_factory.ts";
 import { AuthorRepo } from "#application/repo/author_repo.ts";
 import { Author, AuthorUser } from "#domain/model/author.ts";
@@ -26,23 +26,21 @@ class TestJwtService implements JwtService {
   }
 }
 
-describe("AuthorUseCaseFactory", () => {
-  let factory: AuthorUseCaseFactory;
+let factory: AuthorUseCaseFactory;
 
-  beforeEach(() => {
-    factory = new AuthorUseCaseFactory(
-      new TestAuthorRepo(),
-      new TestJwtService(),
-    );
-  });
+beforeEach(() => {
+  factory = new AuthorUseCaseFactory(
+    new TestAuthorRepo(),
+    new TestJwtService(),
+  );
+});
 
-  it("[createAuthor] should return an instance of CreateAuthor", () => {
-    const useCase = factory.createAuthor();
-    assert.instanceOf(useCase, CreateAuthor);
-  });
+test("[createAuthor] should return an instance of CreateAuthor", () => {
+  const useCase = factory.createAuthor();
+  assert.instanceOf(useCase, CreateAuthor);
+});
 
-  it("[getAuthor] should return an instance of GetAuthor", () => {
-    const useCase = factory.getAuthor();
-    assert.instanceOf(useCase, GetAuthor);
-  });
+test("[getAuthor] should return an instance of GetAuthor", () => {
+  const useCase = factory.getAuthor();
+  assert.instanceOf(useCase, GetAuthor);
 });
