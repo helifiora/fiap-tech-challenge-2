@@ -51,5 +51,5 @@ afterEach(async () => {
 test("should remove from database successfuly", async () => {
   await useCase.handle({ id: post.id });
   const result = await postRepo.getById(post.id);
-  assert.isNull(result);
+  assert.isNull(result, 'The post should have been removed from the database');
 });
