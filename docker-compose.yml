@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  app:
+    container_name: tech_challenger_app
+    build: .
+    ports:
+      - "${PORT}:${PORT}"
+    env_file: 
+      - .env
+    depends_on:
+      - db
+
+  db:
+    container_name: postgres_fiap
+    image: postgres:13
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
