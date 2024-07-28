@@ -20,5 +20,5 @@ jobs:
       - name: Build and Push Docker Image
         run: |
           docker login -u $POSTGRES_USER -p $POSTGRES_PASSWORD
-          docker build -t $POSTGRES_USER/tech_challenge_2:latest --build-arg POSTGRES_DB=${{ secrets.POSTGRES_DB }} --build-arg JWT_SECRET=${{ secrets.JWT_SECRET }} .
-          docker push $POSTGRES_USER/tech_challenge_2:latest
+          docker build -t $POSTGRES_USER/tech-challenge-2:latest --build-arg POSTGRES_DB=${{ secrets.POSTGRES_DB }} --build-arg JWT_SECRET=${{ secrets.JWT_SECRET }} .
+          docker push $POSTGRES_USER/tech-challenge-2:latest
