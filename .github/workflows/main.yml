@@ -20,5 +20,5 @@ jobs:
       - name: Build and Push Docker Image
         run: |
           docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-          docker build -t $DOCKER_USERNAME/tech-challenge-2:latest --build-arg DATABASE_URL=${{ secrets.DATABASE_URL }} --build-arg JWT_SECRET=${{ secrets.JWT_SECRET }} .
-          docker push $DOCKER_USERNAME/tech-challenge-2:latest
+          docker build -t $DOCKER_USERNAME/tech_challenger_app:latest --build-arg DATABASE_URL=${{ secrets.DATABASE_URL }} --build-arg JWT_SECRET=${{ secrets.JWT_SECRET }} .
+          docker push $DOCKER_USERNAME/tech_challenger_app:latest
