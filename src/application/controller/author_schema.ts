@@ -5,7 +5,12 @@ const signIn = v.object({
     v.string("'email' deve ser uma string"),
     v.email("'email' invalido"),
   ),
-  password: v.string("'password' deve ser uma string'"),
+  password: v.pipe(
+    v.string("'password' deve ser uma string'"),
+    v.minLength(8, "'password' deve ter no mínimo 8 caracteres"),
+    v.regex(/[a-z]/, "'password' deve conter letra minuscula"),
+    v.regex(/[A-Z]/, "'password' deve conter letra maiúscula"),
+  ),
 });
 
 const signUp = v.object({

@@ -3,7 +3,6 @@
   "type": "module",
   "scripts": {
     "start": "npm run build && node dist/app.ts",
-    "migrate:up": "node --env-file=.env --import tsx src/migrate.ts",
     "dev": "node --env-file=.env --import tsx --watch src/main.ts",
     "test": "vitest",
     "test:ui": "vitest --ui --coverage",

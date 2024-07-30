@@ -6,6 +6,25 @@ import { JwtService } from "#application/jwt_service.ts";
 import { CreateAuthor } from "#application/usecase/author/create_author.ts";
 import { GetAuthor } from "#application/usecase/author/get_author.ts";
 
+let factory: AuthorUseCaseFactory;
+
+beforeEach(() => {
+  factory = new AuthorUseCaseFactory(
+    new TestAuthorRepo(),
+    new TestJwtService(),
+  );
+});
+
+test("[createAuthor] should return an instance of CreateAuthor", () => {
+  const useCase = factory.createAuthor();
+  assert.instanceOf(useCase, CreateAuthor);
+});
+
+test("[getAuthor] should return an instance of GetAuthor", () => {
+  const useCase = factory.getAuthor();
+  assert.instanceOf(useCase, GetAuthor);
+});
+
 class TestAuthorRepo implements AuthorRepo {
   create(author: AuthorUser): Promise<void> {
     throw "not implemented!";
@@ -25,22 +44,3 @@ class TestJwtService implements JwtService {
     throw "not implemented";
   }
 }
-
-let factory: AuthorUseCaseFactory;
-
-beforeEach(() => {
-  factory = new AuthorUseCaseFactory(
-    new TestAuthorRepo(),
-    new TestJwtService(),
-  );
-});
-
-test("[createAuthor] should return an instance of CreateAuthor", () => {
-  const useCase = factory.createAuthor();
-  assert.instanceOf(useCase, CreateAuthor);
-});
-
-test("[getAuthor] should return an instance of GetAuthor", () => {
-  const useCase = factory.getAuthor();
-  assert.instanceOf(useCase, GetAuthor);
-});

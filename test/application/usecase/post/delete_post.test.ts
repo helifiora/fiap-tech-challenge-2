@@ -1,39 +1,35 @@
-import { afterEach, assert, beforeEach, test, inject } from "vitest";
-import { KyselyDatabase } from "#infrastructure/kysely_db.ts";
-import { KyselyMigrator } from "#infrastructure/kysely_migrator.ts";
+import { assert, beforeEach, test, expect } from "vitest";
 import { PostRepo } from "#application/repo/post_repo.ts";
-import { KyselyPostRepo } from "#infrastructure/repo_adapter/kisely_post_repository.ts";
-import { KyselyAuthorRepo } from "#infrastructure/repo_adapter/kysely_author_repository.ts";
 import { AuthorUser } from "#domain/model/author.ts";
-import { setupKyselyDb } from "test/setup_kysely_db.ts";
 import { Post } from "#domain/model/post.ts";
-import { DeletePost } from "#application/usecase/post/delete_post.ts";
-import { randomEmail } from "test/utils";
+import {
+  DeleteNotAuthorizedError,
+  DeletePost,
+} from "#application/usecase/post/delete_post.ts";
+import { useDatabaseContainer } from "../../../use_database_container.ts";
+import { createGuid } from "#domain/service/guid.ts";
 
 let useCase: DeletePost;
 let postRepo: PostRepo;
 
-let db: KyselyDatabase;
-let migrator: KyselyMigrator;
-
 let post: Post;
+let authorId: string;
 
 beforeEach(async () => {
-  const connectionDb = inject("container");
-  [db, migrator] = await setupKyselyDb(connectionDb);
-  await migrator.toLatest();
+  const repoFac = await useDatabaseContainer("delete-post");
 
-  postRepo = new KyselyPostRepo(db);
+  postRepo = repoFac.postRepo();
   useCase = new DeletePost(postRepo);
 
-  const authorRepo = new KyselyAuthorRepo(db);
+  const authorRepo = repoFac.authorRepo();
   const author = await AuthorUser.create(
-    randomEmail(),
+    "johndoe@gmail.com",
     "John Doe",
     "test-hashed-password!",
   );
 
   await authorRepo.create(author);
+  authorId = author.id;
 
   post = Post.create({
     authorId: author.id,
@@ -44,12 +40,32 @@ beforeEach(async () => {
   await postRepo.save(post);
 });
 
-afterEach(async () => {
-  await migrator.toInitial();
+test("should remove from database successfuly", async () => {
+  await useCase.handle({
+    id: post.id,
+    currentAuthorId: authorId,
+  });
+
+  const result = await postRepo.getById(post.id);
+  assert.isNull(result);
 });
 
-test("should remove from database successfuly", async () => {
-  await useCase.handle({ id: post.id });
-  const result = await postRepo.getById(post.id);
-  assert.isNull(result, 'The post should have been removed from the database');
+test("should not remove nothing", async () => {
+  const id = createGuid();
+  await useCase.handle({
+    id,
+    currentAuthorId: authorId,
+  });
+
+  const result = await postRepo.getById(id);
+  assert.isNull(result);
+});
+
+test("should throw DeleteNotAuthorizedError when currentAuthorId is not author of the post", async () => {
+  await expect(() =>
+    useCase.handle({
+      id: post.id,
+      currentAuthorId: createGuid(),
+    }),
+  ).rejects.toThrow(DeleteNotAuthorizedError);
 });

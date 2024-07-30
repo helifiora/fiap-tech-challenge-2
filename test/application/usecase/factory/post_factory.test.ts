@@ -8,28 +8,6 @@ import { GetPostById } from "#application/usecase/post/get_post_by_id.ts";
 import { GetPosts } from "#application/usecase/post/get_posts.ts";
 import { UpdatePost } from "#application/usecase/post/update_post.ts";
 
-class TestPostRepo implements PostRepo {
-  delete(id: string): Promise<void> {
-    throw "not implemented!";
-  }
-
-  getById(id: string): Promise<Post | null> {
-    throw "not implemented!";
-  }
-
-  getMany(options: GetManyOptions): Promise<Post[]> {
-    throw "not implemented!";
-  }
-
-  save(model: Post): Promise<void> {
-    throw "not implemented!";
-  }
-
-  update(model: Post): Promise<void> {
-    throw "not implemented!";
-  }
-}
-
 let factory: PostUseCaseFactory;
 
 beforeEach(() => {
@@ -60,3 +38,25 @@ test("[updatePost] should return an instance of UpdatePost", () => {
   const useCase = factory.updatePost();
   assert.instanceOf(useCase, UpdatePost);
 });
+
+class TestPostRepo implements PostRepo {
+  delete(id: string): Promise<void> {
+    throw "not implemented!";
+  }
+
+  getById(id: string): Promise<Post | null> {
+    throw "not implemented!";
+  }
+
+  getMany(options: GetManyOptions): Promise<Post[]> {
+    throw "not implemented!";
+  }
+
+  save(model: Post): Promise<void> {
+    throw "not implemented!";
+  }
+
+  update(model: Post): Promise<void> {
+    throw "not implemented!";
+  }
+}

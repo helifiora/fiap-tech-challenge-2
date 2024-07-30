@@ -31,7 +31,11 @@ export class PostController {
   async delete(request: ControllerRequest): Promise<ControllerResponse> {
     const id = request.param("id");
     const useCase = this.#useCases.deletePost();
-    await useCase.handle({ id });
+    await useCase.handle({
+      id,
+      currentAuthorId: request.user!.id,
+    });
+
     return ControllerResponse.noContent();
   }
 
@@ -68,6 +72,6 @@ export class PostController {
       id: id,
     });
 
-    return ControllerResponse.created(result);
+    return ControllerResponse.ok(result);
   }
 }

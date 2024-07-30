@@ -6,6 +6,7 @@
     "baseUrl": "./",
     "rootDir": "./",
     "outDir": "dist",
+    "allowJs": true,
     "lib": [
       "ESNext"
     ],

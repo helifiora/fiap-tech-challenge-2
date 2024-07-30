@@ -16,7 +16,6 @@ export class AuthorController {
 
   async signIn(request: ControllerRequest): Promise<ControllerResponse> {
     const body = request.body(authorSchema.signIn);
-
     const useCase = this.#useCases.getAuthor();
 
     const result = await useCase.handle({
