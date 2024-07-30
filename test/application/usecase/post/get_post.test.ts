@@ -56,6 +56,5 @@ test("should return all the items", async () => {
 
 test("should empty when there is no item", async () => {
   const result = await useCase.handle();
-  console.log(result);
   assert.equal(result.length, 0);
 });

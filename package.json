@@ -2,7 +2,7 @@
   "name": "tech-challenge-2",
   "type": "module",
   "scripts": {
-    "start": "npm run build && node dist/app.ts",
+    "start": "npm run build && node dist/main.js",
     "dev": "node --env-file=.env --import tsx --watch src/main.ts",
     "test": "vitest",
     "test:ui": "vitest --ui --coverage",
