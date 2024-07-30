@@ -36,6 +36,7 @@ export class UseRouteConfig implements ServerConfig {
     const ctrl = new PostController(this.#postFac);
     route.get("/", (req) => ctrl.index(req), { anonymous: true });
     route.get("/search", (req) => ctrl.index(req), { anonymous: true });
+    route.get("/admin", (req) => ctrl.index(req), { anonymous: true });
     route.get("/:id", (req) => ctrl.show(req), { anonymous: true });
     route.post("/", (req) => ctrl.create(req));
     route.put("/:id", (req) => ctrl.update(req));
