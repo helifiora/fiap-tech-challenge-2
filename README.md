@@ -32,3 +32,27 @@
 - [Tsup](https://tsup.egoist.dev/), bundler typescript para produção
 - [Tsx](https://github.com/privatenumber/tsx) executar Typescript, utilizado
   no desenvolvimento
+
+
+## Opcional uso do docker
+
+- [Docker](https://www.docker.com/)
+- [Docker Compose](https://docs.docker.com/compose/)
+
+## Configuração do Ambiente
+
+- Crie um arquivo `.env` na raiz do projeto com o contéudo de ".env-default"
+
+## Como executar o projeto
+
+- Construção dos ambientes de aplicação e banco de dados:
+
+      docker compose up --build
+ 
+- Depois da primeira construção, poderá usar comando abaixo para executar:
+
+      docker compose up
+    
+      
+
+
